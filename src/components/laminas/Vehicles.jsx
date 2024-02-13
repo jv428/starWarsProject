@@ -10,7 +10,6 @@ import LazyLoad from "react-lazy-load";
 
 export const Vehicles = ({ data }) => {
 
-  console.log("naves", vehicles);
   return (
     <div className="flex justify-between flex-wrap p-5">
       {data.map((nave) => (

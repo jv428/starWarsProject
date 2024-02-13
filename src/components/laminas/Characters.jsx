@@ -9,8 +9,7 @@ import Face6Icon from '@mui/icons-material/Face6';
 import LazyLoad from "react-lazy-load";
 
 export const Characters = ({ data }) => {
-
-  console.log("personajes", characters);
+  
   return (
     <div className="flex justify-between flex-wrap p-5">
       {data?.map((person) => (

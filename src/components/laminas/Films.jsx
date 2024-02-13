@@ -10,7 +10,6 @@ import LazyLoad from "react-lazy-load";
 
 export const Films = ({ data }) => {
   
-  console.log("Peliculas", films);
   return (
     <div className="flex justify-between flex-wrap p-5">
       {data.map((film) => (
