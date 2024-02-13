@@ -9,15 +9,6 @@ import Face6Icon from '@mui/icons-material/Face6';
 import LazyLoad from "react-lazy-load";
 
 export const Characters = ({ data }) => {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios("https://swapi.dev/api/people/");
-      setCharacters(result.data.results);
-    };
-    fetchData();
-  }, []);
 
   console.log("personajes", characters);
   return (

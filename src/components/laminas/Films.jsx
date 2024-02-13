@@ -9,16 +9,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import LazyLoad from "react-lazy-load";
 
 export const Films = ({ data }) => {
-  const [films, setFilms] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios("https://swapi.dev/api/films/");
-      setFilms(result.data.results);
-    };
-    fetchData();
-  }, []);
-
+  
   console.log("Peliculas", films);
   return (
     <div className="flex justify-between flex-wrap p-5">

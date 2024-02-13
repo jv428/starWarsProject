@@ -9,15 +9,6 @@ import AgricultureIcon from '@mui/icons-material/Agriculture';
 import LazyLoad from "react-lazy-load";
 
 export const Vehicles = ({ data }) => {
-  const [vehicles, setVehicles] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios("https://swapi.dev/api/vehicles/");
-      setVehicles(result.data.results);
-    };
-    fetchData();
-  }, []);
 
   console.log("naves", vehicles);
   return (

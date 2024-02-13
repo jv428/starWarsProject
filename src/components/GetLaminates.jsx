@@ -17,13 +17,6 @@ import Face6Icon from "@mui/icons-material/Face6";
 import MovieIcon from "@mui/icons-material/Movie";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 
-const letters = [
-  { id: 1, disabled: false, open: false },
-  { id: 2, disabled: false, open: false },
-  { id: 3, disabled: false, open: false },
-  { id: 4, disabled: false, open: false },
-];
-
 export const GetLaminates = ({
   data,
   setShowCounter,
