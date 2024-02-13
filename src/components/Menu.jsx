@@ -17,7 +17,7 @@ export const Menu = ({ showCounter, setShowCounter }) => {
         {/* se mapea el objeto OptionsMenu donde se itera cada una de sus propiedades y mostrarlas en el menu */}
         {showCounter && (
           <div className="text-white bg-emerald-600 p-1 px-2 rounded-md">
-            <Countdown date={Date.now() + 10000} onComplete={completeCounter}/>
+            <Countdown date={Date.now() + 60000} onComplete={completeCounter}/>
           </div>
         )}
 
