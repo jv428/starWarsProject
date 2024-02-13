@@ -2,8 +2,12 @@ import React from "react";
 import logo from "../assets/img/logoStarWars2.png";
 import { OptionsMenu } from "../constants/OptionsMenu";
 import { NavLink } from "react-router-dom";
+import Countdown from "react-countdown";
 
-export const Menu = () => {
+export const Menu = ({ showCounter, setShowCounter }) => {
+  const completeCounter = () => {
+    setShowCounter(false)
+  }
   return (
     <div className="flex max-sm:flex-wrap bg-[#201f1f] justify-between w-full top-0 animate-fade-down animate-once animate-duration-[1500ms] animate-delay-100 animate-ease-in-out animate-normal animate-fill-forwards">
       <div className=" flex space-x-5 items-center ml-5 mt-[-10px] max-sm:w-full">
@@ -11,6 +15,12 @@ export const Menu = () => {
       </div>
       <div className="flex w-[25%] space-x-10 items-center mr-16 text-lg max-sm:w-full max-sm:justify-around max-sm:mr-5">
         {/* se mapea el objeto OptionsMenu donde se itera cada una de sus propiedades y mostrarlas en el menu */}
+        {showCounter && (
+          <div>
+            <Countdown date={Date.now() + 10000} onComplete={completeCounter}/>
+          </div>
+        )}
+
         {OptionsMenu.map(({ title, url }) => (
           <div className="flex font-RedHatDisplay font-bold" key={title}>
             {/* usamos NavLink de react-router-dom para la navegacion entre componentes en el menu */}
