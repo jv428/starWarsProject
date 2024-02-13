@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import EmailIcon from "@mui/icons-material/Email";
 import BlockIcon from "@mui/icons-material/Block";
 import DraftsIcon from "@mui/icons-material/Drafts";
-import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import ModalDialog from "@mui/joy/ModalDialog";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import Typography from "@mui/joy/Typography";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Divider from "@mui/joy/Divider";
+import { configLetter } from "../constants/ConfigLetter";
+import { find, isEmpty, random } from "lodash";
+import Face6Icon from "@mui/icons-material/Face6";
+import MovieIcon from "@mui/icons-material/Movie";
+import AgricultureIcon from "@mui/icons-material/Agriculture";
 
 const letters = [
   { id: 1, disabled: false, open: false },
@@ -14,22 +25,62 @@ const letters = [
   { id: 4, disabled: false, open: false },
 ];
 
-export const GetLaminates = ({ data, setShowCounter, showCounter }) => {
+export const GetLaminates = ({
+  data,
+  setShowCounter,
+  showCounter,
+  setAlbum,
+  album,
+}) => {
   const [listLetters, setListLetters] = useState(letters);
-  const [currentLetter, setCurrentLetter] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [layout, setLayout] = useState(undefined);
+  const [randomData, setRandomData] = useState({});
+  const [configRandom, setConfigRandom] = useState([]);
 
+  const ramdonConfig = () => {
+    const configRan = configLetter[random(1, 2)];
+    const listKeys = Object.keys(configRan);
+    setConfigRandom(listKeys);
+    const finalData = {};
+    listKeys.forEach((key) => {
+      const auxData = data[key];
+      const numKey = configRan[key];
+      const listAux = [];
+      for (let i = 0; i < numKey; i++) {
+        const selectRan = random(auxData.length - 1);
+        listAux.push(auxData[selectRan]);
+      }
+      finalData[key] = listAux;
+    });
+    setRandomData(finalData);
+  };
   const openLetter = (currentId) => {
     const newList = listLetters.map(({ id, open }) => {
-      return { id, disabled: currentId == id ? false: true, open: !open? currentId == id: open };
+      return {
+        id,
+        disabled: currentId == id ? false : true,
+        open: !open ? currentId == id : open,
+      };
     });
     setListLetters(newList);
     setShowCounter(true);
-    setCurrentLetter(currentId);
+    ramdonConfig();
+  };
+
+  const saveAlbum = (item, key) => {
+    const auxAlbum = { ...album };
+    auxAlbum[key] = [...auxAlbum[key], item];
+    setAlbum(auxAlbum);
+  };
+  const validItem = (item, key) => {
+    const category = album[key];
+    const result = find(category, item);
+    return isEmpty(result);
   };
   useEffect(() => {
     console.log("dataAll", data);
   }, [data]);
+
   useEffect(() => {
     if (!showCounter) {
       const newList = listLetters.map(({ id, open }) => {
@@ -42,6 +93,172 @@ export const GetLaminates = ({ data, setShowCounter, showCounter }) => {
       setListLetters(newList);
     }
   }, [showCounter]);
+
+  const renderCategory = (list, key) => (
+    <>
+      <div className="flex w-full justify-between flex-wrap p-5">
+        {list.map((item) => (
+          <div className="flex w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
+            <Card variant="outlined" key={item.url} sx={{ width: 550 }}>
+              {key == "people" && (
+                <>
+                  <CardContent>
+                    <div className="flex items-center space-x-5">
+                      <div className="flex justify-center items-center text-white h-8 w-8 rounded-full bg-emerald-500">
+                        <Face6Icon />
+                      </div>
+                      <Typography level="title-md">
+                        Nombre: {item.name}
+                      </Typography>
+                    </div>
+                    <Typography level="body-sm">
+                      Genero: {item.gender}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Estatura: {item.height}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Año de nacimientos: {item.birth_year}
+                    </Typography>
+                  </CardContent>
+                  <CardOverflow
+                    variant="soft"
+                    sx={{ bgcolor: "background.level1" }}
+                  >
+                    <Divider inset="context" />
+                    <CardContent orientation="horizontal">
+                      <Typography
+                        level="body-xs"
+                        fontWeight="md"
+                        textColor="text.secondary"
+                      >
+                        Color Cabello: {item.hair_color}
+                      </Typography>
+                      <Divider orientation="vertical" />
+                      {validItem(item, key) && (
+                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                          Agregar al albúm
+                        </button>
+                      )}
+                      {/* <Typography
+                    level="body-xs"
+                    fontWeight="md"
+                    textColor="text.secondary"
+                  >
+                    Lámina N° {item.episode_id}
+                  </Typography> */}
+                    </CardContent>
+                  </CardOverflow>
+                </>
+              )}
+              {key == "films" && (
+                <>
+                  <CardContent>
+                    <div className="flex items-center space-x-5">
+                      <div className="flex justify-center items-center text-white h-8 w-8 rounded-full bg-sky-500">
+                        <MovieIcon />
+                      </div>
+                      <Typography level="title-md">
+                        Nombre: {item?.title}
+                      </Typography>
+                    </div>
+                    <Typography level="body-sm">
+                      Director: {item?.director}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Fecha de estreno: {item?.release_date}
+                    </Typography>
+                  </CardContent>
+                  <CardOverflow
+                    variant="soft"
+                    sx={{ bgcolor: "background.level1" }}
+                  >
+                    <Divider inset="context" />
+                    <CardContent orientation="horizontal">
+                      <Typography
+                        level="body-xs"
+                        fontWeight="md"
+                        textColor="text.secondary"
+                      >
+                        Poducido por {item?.producer}
+                      </Typography>
+                      <Divider orientation="vertical" />
+                      {validItem(item, key) && (
+                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                          Agregar al albúm
+                        </button>
+                      )}
+                      {/* <Typography
+                    level="body-xs"
+                    fontWeight="md"
+                    textColor="text.secondary"
+                  >
+                    Lámina N° {item.episode_id}
+                  </Typography> */}
+                    </CardContent>
+                  </CardOverflow>
+                </>
+              )}
+              {key == "vehicles" && (
+                <>
+                  <CardContent>
+                    <div className="flex items-center space-x-5">
+                      <div className="flex justify-center items-center text-white h-8 w-8 rounded-full bg-indigo-500">
+                        <AgricultureIcon />
+                      </div>
+                      <Typography level="title-md">
+                        Nombre: {item.name}
+                      </Typography>
+                    </div>
+                    <Typography level="body-sm">
+                      Modelo: {item.model}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Costo en créditos: {item.cost_in_credits}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Tripulantes: {item.crew}
+                    </Typography>
+                    <Typography level="body-sm">
+                      Pasajeros: {item.passengers}
+                    </Typography>
+                  </CardContent>
+                  <CardOverflow
+                    variant="soft"
+                    sx={{ bgcolor: "background.level1" }}
+                  >
+                    <Divider inset="context" />
+                    <CardContent orientation="horizontal">
+                      <Typography
+                        level="body-xs"
+                        fontWeight="md"
+                        textColor="text.secondary"
+                      >
+                        Fabricado por {item.manufacturer}
+                      </Typography>
+                      <Divider orientation="vertical" />
+                      {validItem(item, key) && (
+                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                          Agregar al albúm
+                        </button>
+                      )}
+                      {/* <Typography
+                    level="body-xs"
+                    fontWeight="md"
+                    textColor="text.secondary"
+                  >
+                    Lámina N° {item.episode_id}
+                  </Typography> */}
+                    </CardContent>
+                  </CardOverflow>
+                </>
+              )}
+            </Card>
+          </div>
+        ))}
+      </div>
+    </>
+  );
   return (
     <div className="flex flex-wrap items-center justify-between m-10">
       <div className="w-full text-center mb-20 text-3xl font-medium">
@@ -57,7 +274,7 @@ export const GetLaminates = ({ data, setShowCounter, showCounter }) => {
             key={id}
             onClick={() => {
               openLetter(id);
-              setOpen(true);
+              setLayout("fullscreen");
             }}
             disabled={open || disabled}
           >
@@ -79,38 +296,18 @@ export const GetLaminates = ({ data, setShowCounter, showCounter }) => {
       <div className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500">
         <EmailIcon sx={{ fontSize: 150, color: "white" }} />
       </div> */}
-      <Modal
-        aria-labelledby="modal-title"
-        aria-describedby="modal-desc"
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            borderRadius: 'md',
-            p: 3,
-            boxShadow: 'lg',
-          }}
-        >
-          <ModalClose variant="plain" sx={{ m: 1 }} />
-          <Typography
-            component="h2"
-            id="modal-title"
-            level="h4"
-            textColor="inherit"
-            fontWeight="lg"
-            mb={1}
-          >
-            This is the modal title
-          </Typography>
-          <Typography id="modal-desc" textColor="text.tertiary">
-            Make sure to use <code>aria-labelledby</code> on the modal dialog with an
-            optional <code>aria-describedby</code> attribute.
-          </Typography>
-        </Sheet>
+      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
+        <ModalDialog layout={layout}>
+          <ModalClose />
+          <DialogTitle>¡Genial!, estas son tus láminas</DialogTitle>
+          <DialogContent>
+            <div>
+              {configRandom.map((confRan) =>
+                renderCategory(randomData[confRan], confRan)
+              )}
+            </div>
+          </DialogContent>
+        </ModalDialog>
       </Modal>
     </div>
   );
