@@ -13,11 +13,11 @@ export const Menu = ({ showCounter, setShowCounter }) => {
       <div className=" flex space-x-5 items-center ml-5 mt-[-10px] max-sm:w-full">
         <img src={logo} alt="" width={120} />
       </div>
-      <div className="flex w-[25%] space-x-10 items-center mr-16 text-lg max-sm:w-full max-sm:justify-around max-sm:mr-5">
+      <div className="flex w-[35%] justify-end space-x-10 items-center mr-16 text-lg max-sm:w-full max-sm:justify-around max-sm:mr-5">
         {/* se mapea el objeto OptionsMenu donde se itera cada una de sus propiedades y mostrarlas en el menu */}
         {showCounter && (
           <div className="text-white bg-emerald-600 p-1 px-2 rounded-md">
-            <Countdown date={Date.now() + 60000} onComplete={completeCounter}/>
+            <Countdown date={Date.now() + 10000} onComplete={completeCounter}/>
           </div>
         )}
 

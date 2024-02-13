@@ -43,6 +43,18 @@ export const AppRouter = () => {
     setData(allData());
   }, []);
 
+  const checkAndResetLetters = () => {
+    const allOpened = listLetters.every(({ open }) => open);
+    if (allOpened) {
+      const resetList = listLetters.map(({ id }) => ({
+        id,
+        disabled: false,
+        open: false,
+      }));
+      setListLetters(resetList);
+    }
+  };
+
   useEffect(() => {
     if (!showCounter) {
       const newList = listLetters.map(({ id, open }) => {
@@ -53,6 +65,7 @@ export const AppRouter = () => {
         };
       });
       setListLetters(newList);
+      checkAndResetLetters();
     }
   }, [showCounter]);
   return (

@@ -61,8 +61,11 @@ export const GetLaminates = ({
     <>
       <div className="flex w-full justify-between flex-wrap p-5">
         {list.map((item) => (
-          <div className="flex w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
-            <Card variant="outlined" key={item.url} sx={{ width: 550 }}>
+          <div
+            className="flex w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out"
+            key={item?.url}
+          >
+            <Card variant="outlined" sx={{ width: 550 }}>
               {key == "people" && (
                 <>
                   <CardContent>
@@ -71,17 +74,17 @@ export const GetLaminates = ({
                         <Face6Icon />
                       </div>
                       <Typography level="title-md">
-                        Nombre: {item.name}
+                        Nombre: {item?.name}
                       </Typography>
                     </div>
                     <Typography level="body-sm">
-                      Genero: {item.gender}
+                      Genero: {item?.gender}
                     </Typography>
                     <Typography level="body-sm">
-                      Estatura: {item.height}
+                      Estatura: {item?.height}
                     </Typography>
                     <Typography level="body-sm">
-                      Año de nacimientos: {item.birth_year}
+                      Color de piel: {item?.skin_color}
                     </Typography>
                   </CardContent>
                   <CardOverflow
@@ -95,7 +98,7 @@ export const GetLaminates = ({
                         fontWeight="md"
                         textColor="text.secondary"
                       >
-                        Color Cabello: {item.hair_color}
+                        Año de nacimiento: {item?.birth_year}
                       </Typography>
                       <Divider orientation="vertical" />
                       {validItem(item, key) && (
@@ -162,20 +165,20 @@ export const GetLaminates = ({
                         <AgricultureIcon />
                       </div>
                       <Typography level="title-md">
-                        Nombre: {item.name}
+                        Nombre: {item?.name}
                       </Typography>
                     </div>
                     <Typography level="body-sm">
-                      Modelo: {item.model}
+                      Modelo: {item?.model}
                     </Typography>
                     <Typography level="body-sm">
-                      Costo en créditos: {item.cost_in_credits}
+                      Costo en créditos: {item?.cost_in_credits}
                     </Typography>
                     <Typography level="body-sm">
-                      Tripulantes: {item.crew}
+                      Tripulantes: {item?.crew}
                     </Typography>
                     <Typography level="body-sm">
-                      Pasajeros: {item.passengers}
+                      Pasajeros: {item?.passengers}
                     </Typography>
                   </CardContent>
                   <CardOverflow
@@ -189,7 +192,7 @@ export const GetLaminates = ({
                         fontWeight="md"
                         textColor="text.secondary"
                       >
-                        Fabricado por {item.manufacturer}
+                        Fabricado por {item?.manufacturer}
                       </Typography>
                       <Divider orientation="vertical" />
                       {validItem(item, key) && (
@@ -221,7 +224,7 @@ export const GetLaminates = ({
         const block = !open && disabled;
         return (
           <button
-            className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500"
+            className="flex justify-center items-center bg-amber-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500 disabled:bg-slate-400 disabled:scale-100"
             key={id}
             onClick={() => {
               openLetter(id);
@@ -229,7 +232,14 @@ export const GetLaminates = ({
             }}
             disabled={open || disabled}
           >
-            {openL && <DraftsIcon sx={{ fontSize: 150, color: "white" }} />}
+            {openL && (
+              <div className="flex flex-wrap justify-center">
+                <div>
+                  <DraftsIcon sx={{ fontSize: 150, color: "white" }} />
+                </div>
+                <h1 className="w-full text-white text-2xl">Abierto</h1>
+              </div>
+            )}
             {block && <BlockIcon sx={{ fontSize: 150, color: "white" }} />}
             {closeL && <EmailIcon sx={{ fontSize: 150, color: "white" }} />}
           </button>

@@ -1,5 +1,3 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
@@ -7,10 +5,13 @@ import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import Face6Icon from '@mui/icons-material/Face6';
 import LazyLoad from "react-lazy-load";
+import { isEmpty } from "lodash";
 
 export const Characters = ({ data }) => {
   
   return (
+    <>
+    {!isEmpty(data) ?
     <div className="flex justify-between flex-wrap p-5">
       {data?.map((person) => (
           <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
@@ -30,7 +31,7 @@ export const Characters = ({ data }) => {
                   Estatura: {person?.height}
                 </Typography>
                 <Typography level="body-sm">
-                  Año de nacimientos: {person?.birth_year}
+                  Color de piel: {person?.skin_color}
                 </Typography>
               </CardContent>
               <CardOverflow
@@ -44,7 +45,7 @@ export const Characters = ({ data }) => {
                     fontWeight="md"
                     textColor="text.secondary"
                   >
-                    Poducido por {person?.producer}
+                    Año de nacimiento: {person?.birth_year}
                   </Typography>
                   <Divider orientation="vertical" />
                   <Typography
@@ -61,5 +62,12 @@ export const Characters = ({ data }) => {
           </div>
       ))}
     </div>
+    :
+    <div className="flex flex-wrap w-full border-2 border-slate-300 rounded-md justify-center text-slate-400 p-20">
+      <Face6Icon sx={{fontSize: 80}}/>
+      <span className="w-full text-center mt-3 text-2xl">Álbum vacío</span>
+    </div>
+        }
+    </>
   );
 };
