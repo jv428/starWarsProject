@@ -14,7 +14,7 @@ export const Films = ({ data }) => {
         <div className="flex justify-between flex-wrap p-5">
           {data.map((film) => (
             <div
-              className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out"
+              className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out max-sm:w-full"
               key={film.episode_id}
             >
               <LazyLoad threshold={0.1}>

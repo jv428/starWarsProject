@@ -13,7 +13,7 @@ export const Vehicles = ({ data }) => {
       {!isEmpty(data) ? (
         <div className="flex justify-between flex-wrap p-5">
           {data.map((nave) => (
-            <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
+            <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out max-sm:w-full">
               <LazyLoad threshold={0.1}>
                 <Card variant="outlined" key={nave.name}>
                   <CardContent>

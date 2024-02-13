@@ -14,7 +14,7 @@ export const Characters = ({ data }) => {
     {!isEmpty(data) ?
     <div className="flex justify-between flex-wrap p-5">
       {data?.map((person) => (
-          <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
+          <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out max-sm:w-full">
             <LazyLoad threshold={0.1}>
             <Card variant="outlined" key={person?.name}>
               <CardContent>

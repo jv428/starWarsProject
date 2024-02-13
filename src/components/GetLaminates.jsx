@@ -62,7 +62,7 @@ export const GetLaminates = ({
       <div className="flex w-full justify-between flex-wrap p-5">
         {list.map((item) => (
           <div
-            className="flex w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out"
+            className="flex w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out max-sm:w-full"
             key={item?.url}
           >
             <Card variant="outlined" sx={{ width: 550 }}>
@@ -224,7 +224,7 @@ export const GetLaminates = ({
         const block = !open && disabled;
         return (
           <button
-            className="flex justify-center items-center bg-amber-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500 disabled:bg-slate-400 disabled:scale-100"
+            className="flex justify-center items-center bg-amber-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500 disabled:bg-slate-400 disabled:scale-100 max-sm:w-full max-sm:mb-8"
             key={id}
             onClick={() => {
               openLetter(id);
