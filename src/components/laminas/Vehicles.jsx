@@ -8,7 +8,7 @@ import Typography from "@mui/joy/Typography";
 import AgricultureIcon from '@mui/icons-material/Agriculture';
 import LazyLoad from "react-lazy-load";
 
-export const Vehicles = () => {
+export const Vehicles = ({ data }) => {
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const Vehicles = () => {
   console.log("naves", vehicles);
   return (
     <div className="flex justify-between flex-wrap p-5">
-      {vehicles.map((nave) => (
+      {data.map((nave) => (
           <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out">
             <LazyLoad threshold={0.1}>
             <Card variant="outlined" key={nave.name}>

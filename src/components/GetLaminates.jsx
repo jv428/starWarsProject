@@ -12,8 +12,7 @@ import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
-import { configLetter } from "../constants/ConfigLetter";
-import { find, isEmpty, random } from "lodash";
+import { find, isEmpty } from "lodash";
 import Face6Icon from "@mui/icons-material/Face6";
 import MovieIcon from "@mui/icons-material/Movie";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
@@ -28,32 +27,16 @@ const letters = [
 export const GetLaminates = ({
   data,
   setShowCounter,
-  showCounter,
   setAlbum,
   album,
+  listLetters,
+  setListLetters,
+  randomData,
+  configRandom,
+  ramdonConfig,
 }) => {
-  const [listLetters, setListLetters] = useState(letters);
   const [layout, setLayout] = useState(undefined);
-  const [randomData, setRandomData] = useState({});
-  const [configRandom, setConfigRandom] = useState([]);
 
-  const ramdonConfig = () => {
-    const configRan = configLetter[random(1, 2)];
-    const listKeys = Object.keys(configRan);
-    setConfigRandom(listKeys);
-    const finalData = {};
-    listKeys.forEach((key) => {
-      const auxData = data[key];
-      const numKey = configRan[key];
-      const listAux = [];
-      for (let i = 0; i < numKey; i++) {
-        const selectRan = random(auxData.length - 1);
-        listAux.push(auxData[selectRan]);
-      }
-      finalData[key] = listAux;
-    });
-    setRandomData(finalData);
-  };
   const openLetter = (currentId) => {
     const newList = listLetters.map(({ id, open }) => {
       return {
@@ -80,19 +63,6 @@ export const GetLaminates = ({
   useEffect(() => {
     console.log("dataAll", data);
   }, [data]);
-
-  useEffect(() => {
-    if (!showCounter) {
-      const newList = listLetters.map(({ id, open }) => {
-        return {
-          id,
-          disabled: open,
-          open,
-        };
-      });
-      setListLetters(newList);
-    }
-  }, [showCounter]);
 
   const renderCategory = (list, key) => (
     <>
@@ -136,17 +106,13 @@ export const GetLaminates = ({
                       </Typography>
                       <Divider orientation="vertical" />
                       {validItem(item, key) && (
-                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                        <button
+                          className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md"
+                          onClick={() => saveAlbum(item, key)}
+                        >
                           Agregar al albúm
                         </button>
                       )}
-                      {/* <Typography
-                    level="body-xs"
-                    fontWeight="md"
-                    textColor="text.secondary"
-                  >
-                    Lámina N° {item.episode_id}
-                  </Typography> */}
                     </CardContent>
                   </CardOverflow>
                 </>
@@ -184,17 +150,13 @@ export const GetLaminates = ({
                       </Typography>
                       <Divider orientation="vertical" />
                       {validItem(item, key) && (
-                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                        <button
+                          className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md"
+                          onClick={() => saveAlbum(item, key)}
+                        >
                           Agregar al albúm
                         </button>
                       )}
-                      {/* <Typography
-                    level="body-xs"
-                    fontWeight="md"
-                    textColor="text.secondary"
-                  >
-                    Lámina N° {item.episode_id}
-                  </Typography> */}
                     </CardContent>
                   </CardOverflow>
                 </>
@@ -238,17 +200,13 @@ export const GetLaminates = ({
                       </Typography>
                       <Divider orientation="vertical" />
                       {validItem(item, key) && (
-                        <button className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md" onClick={()=>saveAlbum(item, key)}>
+                        <button
+                          className="p-1 px-2 bg-emerald-500 text-white border-none rounded-md"
+                          onClick={() => saveAlbum(item, key)}
+                        >
                           Agregar al albúm
                         </button>
                       )}
-                      {/* <Typography
-                    level="body-xs"
-                    fontWeight="md"
-                    textColor="text.secondary"
-                  >
-                    Lámina N° {item.episode_id}
-                  </Typography> */}
                     </CardContent>
                   </CardOverflow>
                 </>
@@ -284,25 +242,13 @@ export const GetLaminates = ({
           </button>
         );
       })}
-      {/* <div className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500">
-        <EmailIcon sx={{ fontSize: 150, color: "white" }} />
-      </div>
-      <div className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500">
-        <EmailIcon sx={{ fontSize: 150, color: "white" }} />
-      </div>
-      <div className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500">
-        <EmailIcon sx={{ fontSize: 150, color: "white" }} />
-      </div>
-      <div className="flex justify-center items-center bg-slate-300 w-[20%] h-56 rounded-md shadow-md hover:scale-105 cursor-pointer duration-500">
-        <EmailIcon sx={{ fontSize: 150, color: "white" }} />
-      </div> */}
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
         <ModalDialog layout={layout}>
           <ModalClose />
           <DialogTitle>¡Genial!, estas son tus láminas</DialogTitle>
           <DialogContent>
             <div>
-              {configRandom.map((confRan) =>
+              {configRandom?.map((confRan) =>
                 renderCategory(randomData[confRan], confRan)
               )}
             </div>

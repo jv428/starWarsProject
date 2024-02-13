@@ -9,7 +9,7 @@ import { Films } from "./laminas/Films";
 import { Characters } from "./laminas/Characters";
 import { Vehicles } from "./laminas/Vehicles";
 
-export const MyAlbum = () => {
+export const MyAlbum = ({ album }) => {
   const [index, setIndex] = useState(0);
   return (
     <div>
@@ -54,7 +54,7 @@ export const MyAlbum = () => {
               variant="soft"
               color={index === 0 ? "warning" : "neutral"}
             >
-              6
+                {album['films'].length}
             </Chip>
           </Tab>
           <Tab indicatorInset>
@@ -64,7 +64,7 @@ export const MyAlbum = () => {
               variant="soft"
               color={index === 1 ? "warning" : "neutral"}
             >
-              82
+              {album['people'].length}
             </Chip>
           </Tab>
           <Tab indicatorInset>
@@ -74,7 +74,7 @@ export const MyAlbum = () => {
               variant="soft"
               color={index === 2 ? "warning" : "neutral"}
             >
-             36
+             {album['vehicles'].length}
             </Chip>
           </Tab>
         </TabList>
@@ -86,9 +86,9 @@ export const MyAlbum = () => {
             clipPath: "inset(0 -100vmax)",
           })}
         >
-          <TabPanel value={0}><Films/></TabPanel>
-          <TabPanel value={1}><Characters/></TabPanel>
-          <TabPanel value={2}><Vehicles/></TabPanel>
+          <TabPanel value={0}><Films data={album['films']}/></TabPanel>
+          <TabPanel value={1}><Characters data={album['people']}/></TabPanel>
+          <TabPanel value={2}><Vehicles data={album['vehicles']}/></TabPanel>
         </Box>
       </Tabs>
     </Box>

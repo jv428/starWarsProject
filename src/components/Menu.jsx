@@ -16,8 +16,8 @@ export const Menu = ({ showCounter, setShowCounter }) => {
       <div className="flex w-[25%] space-x-10 items-center mr-16 text-lg max-sm:w-full max-sm:justify-around max-sm:mr-5">
         {/* se mapea el objeto OptionsMenu donde se itera cada una de sus propiedades y mostrarlas en el menu */}
         {showCounter && (
-          <div>
-            <Countdown date={Date.now() + 10000} onComplete={completeCounter}/>
+          <div className="text-white bg-emerald-600 p-1 px-2 rounded-md">
+            <Countdown date={Date.now() + 60000} onComplete={completeCounter}/>
           </div>
         )}
 

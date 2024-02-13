@@ -8,7 +8,7 @@ import Typography from "@mui/joy/Typography";
 import MovieIcon from "@mui/icons-material/Movie";
 import LazyLoad from "react-lazy-load";
 
-export const Films = () => {
+export const Films = ({ data }) => {
   const [films, setFilms] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const Films = () => {
   console.log("Peliculas", films);
   return (
     <div className="flex justify-between flex-wrap p-5">
-      {films.map((film) => (
+      {data.map((film) => (
           <div className="w-[30%] mb-8 animate-fade animate-once animate-duration-[1500ms] animate-ease-out" key={film.episode_id}>
             <LazyLoad threshold={0.1}>
             <Card variant="outlined">
